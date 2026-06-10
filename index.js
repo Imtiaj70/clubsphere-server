@@ -54,21 +54,21 @@ app.get("/test-connection", async (req, res) => {
 });
 
 // ── Admin বানানোর route — কাজ শেষে মুছে ফেলবে ────────────────────────────
-// app.get("/make-admin/:email", async (req, res) => {
-//   try {
-//     const { users } = getCollections();
-//     const result = await users.updateOne(
-//       { email: req.params.email },
-//       { $set: { role: "admin" } }
-//     );
-//     if (result.matchedCount === 0) {
-//       return res.json({ status: "❌ User not found", tip: "আগে register করো" });
-//     }
-//     res.json({ status: "✅ Done", message: `${req.params.email} is now admin` });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+app.get("/make-admin/:email", async (req, res) => {
+  try {
+    const { users } = getCollections();
+    const result = await users.updateOne(
+      { email: req.params.email },
+      { $set: { role: "admin" } }
+    );
+    if (result.matchedCount === 0) {
+      return res.json({ status: "❌ User not found", tip: "আগে register করো" });
+    }
+    res.json({ status: "✅ Done", message: `${req.params.email} is now admin` });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
